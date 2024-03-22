@@ -1,11 +1,14 @@
 server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
+	listen 443 ssl;
+	ssl_protocols TLSv1.2 TLSv1.3;
+
+	ssl_certificate /etc/nginx/ssl/inception.crt;
+	ssl_certificate_key /etc/nginx/ssl/inception.key;
 
 	root /usr/share/nginx/html;
 	index index.html index.htm;
 
-	server_name _;
+	server_name gbrunet.42.fr;
 	location / {
 		try_files $uri $uri/ = 404;
 	}
