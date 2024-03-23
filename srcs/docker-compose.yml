@@ -63,6 +63,18 @@ services:
     networks:
       - inception
 
+  adminer:
+    container_name: adminer
+    build: ./requirements/bonus/adminer
+    image: adminer
+    depends_on:
+      - mariadb
+    ports:
+      - 8080:8080
+    restart: always
+    networks:
+      - inception
+
 networks:
   inception:
     driver: bridge
