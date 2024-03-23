@@ -1,0 +1,54 @@
+services:
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    image: nginx
+    ports:
+      - 443:443
+    volumes:
+      - /home/uotiug/data/wordpress:/var/www/html
+    restart: always
+    networks:
+      - inception
+
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    image: mariadb
+    volumes:
+      - /home/uotiug/data/mysql:/var/lib/mysql
+    restart: always
+    networks:
+      - inception
+    env_file: .env
+
+  wordpress:
+    container_name: wordpress
+    depends_on:
+      - mariadb
+    build: ./requirements/wordpress
+    image: wordpress
+    volumes:
+      - /home/uotiug/data/wordpress:/var/www/html
+    restart: always
+    networks:
+      - inception
+    env_file: .env
+
+  redis:
+    container_name: redis
+    depends_on:
+      - wordpress
+    build: ./requirements/bonus/redis
+    image: redis
+    volumes:
+      - /home/uotiug/data/wordpress:/data
+    ports:
+      - 6379:6379
+    restart: always
+    networks:
+      - inception
+
+networks:
+  inception:
+    driver: bridge

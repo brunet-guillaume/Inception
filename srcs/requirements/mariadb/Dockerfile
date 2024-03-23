@@ -1,16 +1,12 @@
-FROM debian:bullseye
+FROM alpine:3.18.6
 
-RUN apt-get update && apt-get upgrade
-RUN apt-get install mariadb-server -y
-RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
+RUN apk update && apk upgrade
+RUN apk add mariadb mariadb-client mariadb-server-utils
+RUN apk add pwgen
 
-COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
-
-COPY ./tools/mariadb_init.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/mariadb_init.sh
+COPY tools/mariadb_init.sh /scripts/
+RUN chmod +x /scripts/mariadb_init.sh
 
 EXPOSE 3306
 
-ENTRYPOINT ["/usr/local/bin/mariadb_init.sh"]
-
-#CMD ["mariadbd"]
+ENTRYPOINT ["/scripts/mariadb_init.sh"]

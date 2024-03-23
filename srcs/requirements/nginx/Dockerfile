@@ -1,16 +1,18 @@
-FROM debian:bullseye
+FROM alpine:3.18.6
 
-RUN apt-get update && apt-get upgrade
-RUN apt-get install nginx -y
-RUN apt-get install openssl -y
+RUN apk update && apk upgrade
+RUN apk add nginx
+RUN apk add openssl
 
-RUN mkdir /etc/nginx/ssl
-RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out /etc/nginx/ssl/inception.crt \
-	-keyout /etc/nginx/ssl/inception.key \
-	-subj "/C=FR/ST=IdF/L=Paris/O=42/OU=gbrunet/CN=gbrunet.42.fr"
+# Copying nginx_init.sh in the docker before running it to
+# create ssl certificate
+COPY tools/nginx_init.sh /scripts/
+RUN chmod +x /scripts/nginx_init.sh
+RUN sh /scripts/nginx_init.sh
 
-COPY ./conf/default /etc/nginx/sites-available/default
+# Copying wordpress.conf in conveniant folder for nginx
+COPY conf/wordpress.conf /etc/nginx/http.d/wordpress.conf
 
 EXPOSE 443/tcp
 
-CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
