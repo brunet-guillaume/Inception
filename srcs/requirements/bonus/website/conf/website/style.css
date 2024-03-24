@@ -1,0 +1,72 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #222;
+}
+
+canvas {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.content {
+	position:relative;
+	margin:3em;
+	color:#EFF6E0;
+	font-family: "Bebas Neue", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.title {
+	font-size: 4em;
+	text-align: right;
+	position: absolute;
+	width:100%;
+}
+
+.hi {
+	font-family: "Libre Baskerville", serif;
+	position: relative;
+	font-size: 2em;
+}
+
+.stuff {
+	font-family: "Libre Baskerville", serif;
+	position: relative;
+	font-size: 1.5em;
+	color: #AEC3B0;
+}
+
+.gitlab {
+	position:absolute;
+	margin:3em;
+	font-family: "Libre Baskerville", serif;
+	bottom: 0;
+}
+
+.gitlab a {
+	text-decoration: none;
+	color:#EFF6E0;
+}
+
+.gitlab a:hover {
+	text-decoration: none;
+	color: #AEC3B0;
+}
+
+#score {
+	font-size: 1em;
+	text-align: right;
+	position: absolute;
+	color:rgba(255, 255, 255, 0.5);
+	margin:3em;
+	bottom: 0;
+	right: 0;
+}

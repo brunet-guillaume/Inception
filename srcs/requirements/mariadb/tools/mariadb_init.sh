@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# testing if mysqld is already present
 if [ -d "/run/mysqld" ]; then
 	echo "mysqld already present."
 	chown -R mysql:mysql /run/mysqld
@@ -9,6 +10,7 @@ else
 	chown -R mysql:mysql /run/mysqld
 fi
 
+# testing if mysql is already present
 if [ -d "/var/lib/mysql/mysql" ]; then
 	echo "MySQL already present."
 	chown -R mysql:mysql /var/lib/mysql
@@ -17,6 +19,7 @@ else
 	chown -R mysql:mysql /var/lib/mysql
 	mysql_install_db --user=mysql --ldata=/var/lib/mysql > /dev/null
 
+	# generating random password if MYSQL_ROOT_PSW is empty
 	if [ "$MYSQL_ROOT_PSW" = "" ]; then
 		MYSQL_ROOT_PSW=`pwgen 16 1`
 		echo "MySQL root psw: $MYSQL_ROOT_PSW"
@@ -26,6 +29,7 @@ else
 	MYSQL_USER=${MYSQL_USER:-""}
 	MYSQL_PSW=${MYSQL_PSW:-""}
 	
+	# creating sql commands for initialising the wordpress database
 	tmp_file=`mktemp`
 	if [ ! -f "$tmp_file" ]; then
 		return 1
@@ -53,5 +57,5 @@ EOF
 	/usr/bin/mysqld --user=mysql --bootstrap --verbose=0 --skip-name-resolve --skip-networking=0 < $tmp_file
 	rm -f $tmp_file
 fi
-
+# running mysql
 exec /usr/bin/mysqld --user=mysql --console --skip-name-resolve --skip-networking=0 $@
