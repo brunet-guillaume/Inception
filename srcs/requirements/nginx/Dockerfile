@@ -12,6 +12,9 @@ RUN sh /scripts/nginx_init.sh
 
 # Copying wordpress.conf in conveniant folder for nginx
 COPY conf/wordpress.conf /etc/nginx/http.d/wordpress.conf
+COPY conf/adminer.conf /etc/nginx/http.d/adminer.conf
+COPY conf/website.conf /etc/nginx/http.d/website.conf
+COPY conf/cadvisor.conf /etc/nginx/http.d/cadvisor.conf
 
 EXPOSE 443/tcp
 

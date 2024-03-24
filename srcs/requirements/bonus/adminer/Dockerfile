@@ -9,8 +9,6 @@ RUN apk add php81 php81-common php81-session php81-iconv php81-gd \
 COPY tools/adminer_init.sh /scripts/
 RUN chmod +x /scripts/adminer_init.sh
 
-#COPY conf/www.conf /etc/php81/php-fdm.d/www.conf
-
 EXPOSE 8080
 
 ENTRYPOINT ["/scripts/adminer_init.sh"]

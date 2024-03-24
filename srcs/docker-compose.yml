@@ -43,8 +43,6 @@ services:
     image: redis
     volumes:
       - /home/uotiug/data/wordpress:/data
-    ports:
-      - 6379:6379
     restart: always
     networks:
       - inception
@@ -69,8 +67,27 @@ services:
     image: adminer
     depends_on:
       - mariadb
-    ports:
-      - 8080:8080
+    restart: always
+    networks:
+      - inception
+
+  website:
+    container_name: website
+    build: ./requirements/bonus/website
+    image: website
+    restart: always
+    networks:
+      - inception
+
+  cadvisor:
+    container_name: cadvisor
+    build: ./requirements/bonus/cadvisor
+    image: cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
     restart: always
     networks:
       - inception
