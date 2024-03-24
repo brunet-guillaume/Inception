@@ -8,4 +8,4 @@ if [ ! -d /var/www/html ];then
 	adduser -u 82 -D -S -G www-data www-data
 fi
 
-/usr/sbin/php-fpm81 --nodaemonize
+php -S [::]:8080 -t /var/www/html
