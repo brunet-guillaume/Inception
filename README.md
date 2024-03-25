@@ -1,4 +1,6 @@
 # Inception (42 school)
+> 📑 &ensp;Subject [here](/subject/subject_Inception.pdf) <br />
+✅ &ensp;**125**/100
 
 Project in the fifth circle in 42 school.
 
