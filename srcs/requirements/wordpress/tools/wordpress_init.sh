@@ -8,7 +8,9 @@ if [ -f /var/www/html/wp-config.php ]; then
 	echo "Worpress already downloaded"
 else
 	# creating html folder for wordpress
-	mkdir /var/www/html
+	if [ ! -d /var/www/html ]; then
+		mkdir /var/www/html
+	fi
 	chown -R www-data:www-data /var/www/html
 	cd /var/www/html
 	echo "Downloading wordpress..."
@@ -17,6 +19,7 @@ else
 	tar xfz wp.tar.gz
 	rm -rf wp.tar.gz
 	mv wordpress/* .
+	sleep 5
 	# configuring wordpress with the cli
 	wp-cli config create --allow-root --dbname=$MYSQL_DB --dbuser=$MYSQL_USER \
 		--dbpass=$MYSQL_PSW --dbhost=mariadb:3306

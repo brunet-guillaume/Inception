@@ -28,6 +28,8 @@ _END = \033[0m
 
 all:
 	@echo "$(_GREEN)Building and running Inception...$(_END)"
+	mkdir -p /home/${USER}/data/wordpress
+	mkdir -p /home/${USER}/data/mysql
 	docker compose -f ./srcs/docker-compose.yml up -d --build
 
 stop:
