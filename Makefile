@@ -40,8 +40,6 @@ clean:
 	@make stop --no-print-directory
 	@echo "$(_YELLOW)Removing all unused containers, networks and volumes...$(_END)"
 	docker system prune -f
-	docker rmi -f $$(docker images -qa)
-	docker volume rm $$(docker volume ls -q)
 
 re:
 	@make clean --no-print-directory
