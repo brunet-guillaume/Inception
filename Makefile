@@ -6,7 +6,7 @@
 #    By: gbrunet <guill@umebrunet.fr>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/24 17:40:01 by gbrunet           #+#    #+#              #
-#    Updated: 2024/03/24 18:02:30 by gbrunet          ###   ########.fr        #
+#    Updated: 2024/03/25 15:46:09 by gbrunet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,9 +27,10 @@ _END = \033[0m
 .PHONY : all stop re clean
 
 all:
+	@make info --no-print-directory
 	@echo "$(_GREEN)Building and running Inception...$(_END)"
-	mkdir -p /home/${USER}/data/wordpress
-	mkdir -p /home/${USER}/data/mysql
+	@mkdir -p /home/${USER}/data/wordpress
+	@mkdir -p /home/${USER}/data/mysql
 	docker compose -f ./srcs/docker-compose.yml up -d --build
 
 stop:
@@ -38,9 +39,17 @@ stop:
 
 clean:
 	@make stop --no-print-directory
-	@echo "$(_YELLOW)Removing all unused containers, networks and volumes...$(_END)"
+	@echo "$(_YELLOW)Removing all unused containers...$(_END)"
 	docker system prune -f
 
 re:
 	@make clean --no-print-directory
 	@make all --no-print-directory
+
+info :
+	@printf "\t$(_PURPLE)╭──────────────────────────────────────╮"
+	@printf "\n\t│$(_END)  👾  $(_CYAN)$(_THIN)Coded by $(_END)$(_CYAN)"
+	@printf "$(_BOLD)guillaume brunet$(_END)$(_PURPLE)       │\n"
+	@printf "\t│$(_END)  💬  $(_RED)$(_BOLD)Do not copy$(_END)$(_RED)$(_THIN), "
+	@printf "$(_END)$(_RED)this is useless...$(_END) $(_PURPLE)│\n"
+	@printf "\t╰──────────────────────────────────────╯\n$(_END)"
